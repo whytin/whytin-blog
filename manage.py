@@ -23,7 +23,7 @@ manager = Manager(app)
 migrate = Migrate(app,db)
 
 def make_shell_context():
-	return dict(app=app, db=db, User=User)
+	return dict(app=app, db=db, User=User, Role=Role, Permission=Permission)
 
 manager.add_command("shell", Shell(make_context=make_shell_context))
 manager.add_command('db',MigrateCommand)
@@ -34,11 +34,12 @@ def test():
     import unittest
     tests = unittest.TestLoader().discover('tests')
     unittest.TextTestRunner(verbosity=2).run(tests)
+
 @manager.command
 def deploy():
 	"""Run deployment tasks"""
 	from flask.ext.migrate import upgrade
-	from app.models import Role, User
+	from app.models import Role
 
 	upgrade()
 	Role.insert_roles()
