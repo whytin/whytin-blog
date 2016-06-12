@@ -77,5 +77,7 @@ class HerokuConfig(ProductionConfig):
 config = {
 	'development': DevelopmentConfig,
 	'production': ProductionConfig,
-	'default': ProductionConfig 
+	'default': ProductionConfig, 
+	'heroku': HerokuConfig,
+	'unix': UnixConfig
 }
