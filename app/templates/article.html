@@ -1,0 +1,40 @@
+<!-- ######################################################
+#
+#Author:          whytin
+#Email:           whytin@yeah.net
+#QQ:              583501947
+#
+#Filename:        article.html
+#Last modified:   2016-06-10 16:48
+#Description:     
+#
+###################################################### -->
+
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+{% block title %}博客-文章{% endblock %}
+
+{% block page_content %}
+<link rel=stylesheet type=text/css href="{{url_for('static',filename='styles.css')}}">
+<div class="page-header">
+    <h1>{{ post.title }}</h1>
+</div>
+<div class="post-content">
+    {{ post.body }}
+</div>
+<h4 id="comments">评论</h4>
+{% if current_user.can(Permission.COMMENT) %}
+<div class="comment-form">
+	{{ wtf.quick_form(form) }}
+</div>
+{% endif %}
+{% include '_comments.html' %}
+{% if pagination %}
+<div class="pagination">
+	{{ macros.pagination_widget(pagination, '.get_article', fragment='#comments', id=post.id ) }}
+{% endif %}
+{% endblock %}
+
+

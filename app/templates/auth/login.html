@@ -1,0 +1,27 @@
+<!-- ######################################################
+#
+#Author:          whytin
+#Email:           whytin@yeah.net
+#QQ:              583501947
+#
+#Filename:        login.html
+#Last modified:   2016-06-05 14:16
+#Description:     
+#
+###################################################### -->
+
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf  %}
+{% block title %}博客-用户登陆{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+	<h1>登陆</h1>
+</div>
+<div class="col-md-4">
+	{{ wtf.quick_form(form) }}
+    <br>
+	<p>忘记密码？<a href="{{ url_for('auth.password_reset_request') }}">点击这里找回密码</a></p>
+    <p>没有帐号？<a href="{{ url_for('auth.register') }}">点击这里注册新帐号</a>.</p>
+</div>
+{% endblock %}

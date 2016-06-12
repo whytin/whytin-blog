@@ -1,0 +1,33 @@
+<!-- ######################################################
+#
+#Author:          whytin
+#Email:           whytin@yeah.net
+#QQ:              583501947
+#
+#Filename:        unconfirmed.html
+#Last modified:   2016-06-08 14:42
+#Description:     
+#
+###################################################### -->
+
+{% extends "base.html" %}
+
+{% block title %}博客-请确认你的帐号{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>
+        你好, {{ current_user.username }}!
+    </h1>
+    <h3>你还没有确认你的账户</h3>
+    <p>
+        在进入此之前你必须先确认你的帐号，查看你的邮箱并且打开确认链接。
+    </p>
+    <p>
+        没有收到邮件？
+        <a href="{{ url_for('auth.resend_confirmation') }}">点击重新发送</a>
+    </p>
+</div>
+{% endblock %}
+
+

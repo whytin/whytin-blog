@@ -1,0 +1,27 @@
+<!-- ######################################################
+#
+#Author:          whytin
+#Email:           whytin@yeah.net
+#QQ:              583501947
+#
+#Filename:        edit_profile.html
+#Last modified:   2016-06-10 15:15
+#Description:     
+#
+###################################################### -->
+
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}博客-编辑资料{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>编辑个人资料</h1>
+</div>
+<div class="col-md-4">
+    {{ wtf.quick_form(form) }}
+</div>
+{% endblock %}
+
+
