@@ -42,7 +42,7 @@ class DevelopmentConfig(Config):
 	SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or 'sqlite:///'+ os.path.join(basedir, 'data-test.sqlite')
 
 class ProductionConfig(Config):
-	SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') 
+	SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'postgres://xainymaradncjc:B6RuCbR58z4xwQjCqj8y8Qmg2s@ec2-54-243-204-57.compute-1.amazonaws.com:5432/dbh06sd7a716sn'
 	@classmethod
 	def init_app(cls, app):
 		Config.init_app(app)
