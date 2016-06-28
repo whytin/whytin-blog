@@ -11,14 +11,14 @@
 #
 ######################################################
 
-from flask import render_template, redirect, url_for, abort, flash, request, current_app
+from flask import render_template, redirect, url_for, abort, flash, request, current_app, session
 from flask.ext.login import login_required, current_user
 from . import main
-from .forms import EditProfileForm, EditProfileAdminForm, PostForm, CommentForm
-from .. import db
+from .forms import EditProfileForm, EditProfileAdminForm, PostForm, CommentForm, RoomForm 
+from .. import db, socketio
 from ..models import Role, User, Post, Permission, Comment
 from ..decorators import admin_required
-
+from flask.ext.socketio import emit, join_room, leave_room
 
 @main.route('/')
 def index():
@@ -120,4 +120,42 @@ def edit_profile_admin(id):
     form.location.data = user.location
     form.about_me.data = user.about_me
     return render_template('edit_profile.html', form=form, user=user)
+
+@main.route('/room',methods=['GET','POST'])
+@login_required
+def room():
+	form = RoomForm()
+	if form.validate_on_submit():
+		session['room'] = form.room.data
+		return redirect(url_for('.chat'))
+	return render_template('room.html', form=form)
+	
+
+@main.route('/chat')
+def chat():
+	name = current_user.name
+	room = session.get('room')
+	return render_template('chat.html', name=name, room=room)
+
+@socketio.on('joined', namespace='/chat')
+def joined(message):
+	"""Sent by clients when they enter a room.A status message is broadcast to all people in the room."""
+	room = session.get('room')
+	join_room(room)
+	emit('status', {'msg': current_user.name + ' 进入了聊天室'}, room=room)
+
+
+@socketio.on('text', namespace='/chat')
+def left(message):
+	"""Sent by a client when the user entered a new message.The message is sent to all people in the room."""
+	room = session.get('room')
+	emit('message', {'msg': current_user.name + ':' + message['msg']}, room=room)
+
+
+@socketio.on('left', namespace='/chat')
+def left(message):
+	"""Sent by clients when they leave a room.A status message is broadcast to all people in the room."""
+	room = session.get('room')
+	leave_room(room)
+	emit('status', {'msg': current_user.name + ' 离开了聊天室'}, room=room)
 

@@ -13,7 +13,7 @@
 
 from flask.ext.wtf import Form
 from wtforms import StringField, TextAreaField, BooleanField, SelectField,\
-    SubmitField
+    SubmitField, IntegerField
 from wtforms.validators import Required, Length, Email, Regexp
 from wtforms import ValidationError
 from ..models import Role, User, Post, Comment
@@ -71,3 +71,7 @@ class PostForm(Form):
 class CommentForm(Form):
 	body = StringField('你的看法', validators=[Required()])
 	submit = SubmitField('提交')
+
+class RoomForm(Form):
+	room = IntegerField('房间号：', validators=[Required()])
+	submit = SubmitField('进入聊天室')

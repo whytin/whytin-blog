@@ -43,6 +43,7 @@ class DevelopmentConfig(Config):
 
 class ProductionConfig(Config):
 	SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'postgres://xainymaradncjc:B6RuCbR58z4xwQjCqj8y8Qmg2s@ec2-54-243-204-57.compute-1.amazonaws.com:5432/dbh06sd7a716sn'
+	DEBUG = True
 	@classmethod
 	def init_app(cls, app):
 		Config.init_app(app)

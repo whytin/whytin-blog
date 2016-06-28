@@ -13,7 +13,7 @@
 #!/usr/bin/env python
 
 import os
-from app import create_app, db
+from app import create_app, db, socketio
 from app.models import User, Role, Permission
 from flask.ext.script import Manager, Shell
 from flask.ext.migrate import Migrate, MigrateCommand
@@ -27,6 +27,7 @@ def make_shell_context():
 
 manager.add_command("shell", Shell(make_context=make_shell_context))
 manager.add_command('db',MigrateCommand)
+
 
 @manager.command
 def test():
@@ -45,4 +46,5 @@ def deploy():
 	Role.insert_roles()
 
 if __name__ == '__main__':
-	manager.run()
+	socketio.run(app)
+#	manager.run()

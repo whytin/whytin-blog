@@ -37,6 +37,10 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="{{ url_for('main.user', username='whytin') }}">关于博主</a></li>
+				<li><a href="{{ url_for('main.room') }}">聊天室</a></li>
+				{% if current_user.is_administrator() %}
+				<li><a href="{{ url_for('main.edit_post') }}">写博客</a></li>
+				{% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if current_user.is_authenticated %}
