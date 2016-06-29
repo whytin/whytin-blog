@@ -133,7 +133,8 @@ def room():
 
 @main.route('/chat')
 def chat():
-	name = current_user.name
+	session['name'] = current_user.name
+	name = session.get('name')
 	room = session.get('room')
 	return render_template('chat.html', name=name, room=room)
 
@@ -141,21 +142,24 @@ def chat():
 def joined(message):
 	"""Sent by clients when they enter a room.A status message is broadcast to all people in the room."""
 	room = session.get('room')
+	name = str(session.get('name'))
 	join_room(room)
-	emit('status', {'msg': current_user.name + ' 进入了聊天室'}, room=room)
+	emit('status', {'msg': name + ' 进入了聊天室'}, room=room)
 
 
 @socketio.on('text', namespace='/chat')
 def left(message):
 	"""Sent by a client when the user entered a new message.The message is sent to all people in the room."""
 	room = session.get('room')
-	emit('message', {'msg': current_user.name + ':' + message['msg']}, room=room)
+	name = str(session.get('name'))
+	emit('message', {'msg': name + ':' + message['msg']}, room=room)
 
 
 @socketio.on('left', namespace='/chat')
 def left(message):
 	"""Sent by clients when they leave a room.A status message is broadcast to all people in the room."""
 	room = session.get('room')
+	name = str(session.get('name'))
 	leave_room(room)
-	emit('status', {'msg': current_user.name + ' 离开了聊天室'}, room=room)
+	emit('status', {'msg': name + ' 离开了聊天室'}, room=room)
 
