@@ -11,6 +11,8 @@ Flask-Script==0.6.6
 Flask-WTF==0.9.4
 Flask-SocketIO==1.0
 gevent-socketio==0.3.6
+gevent==1.1b4
+gevent-websocket==0.9.5
 eventlet==0.17.4
 greenlet==0.4.2
 python-engineio==0.7.1
