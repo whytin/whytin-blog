@@ -33,3 +33,4 @@ six==1.4.1
 gunicorn==18.0
 Flask-SSLify==0.1.4
 psycopg2==2.5.1
+wsgiref==0.1.2
